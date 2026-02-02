@@ -1,5 +1,5 @@
 function App() {
-  return <>날씨 앱</>
+  return <div>날씨 앱</div>
 }
 
 export default App
