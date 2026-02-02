@@ -2,7 +2,7 @@ const Footer = () => {
   return (
     <footer className="mt-auto w-full max-w-5xl pt-6">
       <div className="flex items-center justify-between border-t border-gray-800 py-4 text-xs text-gray-600">
-        <span>© Weather Ko · 고다솜</span>
+        <span>© 오늘의 날씨 · 고다솜</span>
         <a
           href="https://github.com/ds92ko/weather-ko"
           target="_blank"
