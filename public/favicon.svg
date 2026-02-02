@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="32" height="32">
+  <defs>
+    <linearGradient id="sky" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#2563eb"/>
+      <stop offset="100%" stop-color="#4f46e5"/>
+    </linearGradient>
+    <linearGradient id="sun" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#fbbf24"/>
+      <stop offset="100%" stop-color="#f59e0b"/>
+    </linearGradient>
+  </defs>
+  <rect width="32" height="32" rx="8" fill="url(#sky)"/>
+  <circle cx="13" cy="13" r="5.5" fill="url(#sun)"/>
+  <circle cx="13" cy="13" r="5.5" fill="none" stroke="#fde68a" stroke-width="0.6" opacity="0.5"/>
+  <line x1="13" y1="5" x2="13" y2="3.5" stroke="#fbbf24" stroke-width="1.5" stroke-linecap="round"/>
+  <line x1="13" y1="21" x2="13" y2="22.5" stroke="#fbbf24" stroke-width="1.5" stroke-linecap="round"/>
+  <line x1="5" y1="13" x2="3.5" y2="13" stroke="#fbbf24" stroke-width="1.5" stroke-linecap="round"/>
+  <line x1="21" y1="13" x2="22.5" y2="13" stroke="#fbbf24" stroke-width="1.5" stroke-linecap="round"/>
+  <line x1="7.34" y1="7.34" x2="6.28" y2="6.28" stroke="#fbbf24" stroke-width="1.5" stroke-linecap="round"/>
+  <line x1="18.66" y1="18.66" x2="19.72" y2="19.72" stroke="#fbbf24" stroke-width="1.5" stroke-linecap="round"/>
+  <line x1="7.34" y1="18.66" x2="6.28" y2="19.72" stroke="#fbbf24" stroke-width="1.5" stroke-linecap="round"/>
+  <line x1="18.66" y1="7.34" x2="19.72" y2="6.28" stroke="#fbbf24" stroke-width="1.5" stroke-linecap="round"/>
+  <ellipse cx="20" cy="22" rx="8" ry="5" fill="white" opacity="0.95"/>
+  <ellipse cx="16" cy="21" rx="5" ry="4" fill="white" opacity="0.95"/>
+  <ellipse cx="22" cy="21.5" rx="4.5" ry="3.5" fill="white" opacity="0.95"/>
+</svg>
