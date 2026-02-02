@@ -1,8 +1,8 @@
 import type { Coord } from '@/shared/model/coord'
-import type { Hourly } from '@/shared/model/hourly'
+import type { Hourly, WeatherIconCode } from '@/shared/model/weather'
 
 interface OneCallWeather {
-  icon?: string
+  icon?: WeatherIconCode
   description?: string
 }
 interface OneCallDaily {
@@ -26,7 +26,7 @@ export type WeatherQuery = Coord
 interface WeatherResult {
   temp: number
   description: string
-  icon: string
+  icon: WeatherIconCode
   min: number
   max: number
   hourly: Hourly[]
