@@ -5,7 +5,7 @@ import type {
 } from '@/entities/location/model/kakao'
 import { queryOptions } from '@tanstack/react-query'
 
-export const locationQueries = {
+const locationQueries = {
   all: ['location'] as const,
   geocode: (query: GeocodeQuery) =>
     queryOptions({
@@ -18,3 +18,5 @@ export const locationQueries = {
       queryFn: () => kakaoApi.getRegionName(query),
     }),
 }
+
+export default locationQueries
