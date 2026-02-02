@@ -2,7 +2,8 @@ import { useParams } from 'react-router-dom'
 
 const Weather = () => {
   const { location } = useParams<{ location: string }>()
-  return <main>Weather {location}</main>
+
+  return <>Weather {location}</>
 }
 
 export default Weather
