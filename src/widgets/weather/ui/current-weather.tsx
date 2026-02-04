@@ -4,6 +4,7 @@ import HourlyWeather, {
   HourlyWeatherSkeleton,
 } from '@/shared/ui/hourly-weather'
 import Skeleton from '@/shared/ui/skeleton'
+import TempRange from '@/shared/ui/temp-range'
 import WeatherCard from '@/shared/ui/weather-card'
 import WeatherIcon from '@/shared/ui/weather-icon'
 import { cva } from 'class-variance-authority'
@@ -104,10 +105,7 @@ const CurrentWeather = () => {
               </div>
               <div className="mt-2 flex flex-wrap-reverse items-center justify-between gap-2">
                 <p className="text-sm text-blue-200">{weather.description}</p>
-                <div className="flex gap-3 text-sm text-blue-200">
-                  <span>↓ {weather.min}°</span>
-                  <span>↑ {weather.max}°</span>
-                </div>
+                <TempRange min={weather.min} max={weather.max} />
               </div>
               <div className="mt-6 border-t border-white/10 pt-6">
                 <HourlyWeather data={weather.hourly} variant="inline" />

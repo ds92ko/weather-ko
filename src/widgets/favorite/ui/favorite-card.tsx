@@ -2,6 +2,7 @@ import type { Favorite } from '@/features/favorites/lib/use-favorites'
 import AliasEditor from '@/features/favorites/ui/alias-editor'
 import useLocationWeather from '@/features/weather/lib/use-location-weather'
 import Skeleton from '@/shared/ui/skeleton'
+import TempRange from '@/shared/ui/temp-range'
 import WeatherIcon from '@/shared/ui/weather-icon'
 import { cva } from 'class-variance-authority'
 import { useRef, useState } from 'react'
@@ -106,10 +107,11 @@ const FavoriteCard = ({
           ) : weather ? (
             <>
               <p className="text-2xl font-light text-white">{weather.temp}°</p>
-              <div className="mt-1 flex gap-2 text-xs text-gray-500">
-                <span>↓ {weather.min}°</span>
-                <span>↑ {weather.max}°</span>
-              </div>
+              <TempRange
+                min={weather.min}
+                max={weather.max}
+                variant="secondary"
+              />
             </>
           ) : (
             <p className="text-sm text-gray-500">날씨 정보 없음</p>
