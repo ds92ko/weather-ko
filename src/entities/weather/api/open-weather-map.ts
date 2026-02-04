@@ -17,7 +17,7 @@ const getFreeWeather = async ({ lat, lon }: WeatherQuery) => {
   ])
 
   if (!currentRes.ok || !forecastRes.ok) {
-    throw { status: currentRes.ok ? forecastRes.status : currentRes.status }
+    throw new ApiError(currentRes.ok ? forecastRes.status : currentRes.status)
   }
 
   const current: CurrentWeatherResponse = await currentRes.json()
