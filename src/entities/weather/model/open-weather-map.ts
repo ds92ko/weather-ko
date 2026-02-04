@@ -41,7 +41,7 @@ export interface ForecastResponse {
 }
 
 export type WeatherQuery = Coord
-interface WeatherResult {
+export interface WeatherResult {
   temp: number
   description: string
   icon: WeatherIconCode
