@@ -74,23 +74,24 @@ const LocationSearch = ({ ref }: LocationSearchProps) => {
         )}
       </div>
       {isFocused && !value && <NoResultsMessage type="empty" />}
-      {value && !filtered.length ? (
-        <NoResultsMessage type="notFound" />
-      ) : (
-        <ul className="absolute left-0 right-0 top-full z-20 mt-2 max-h-80 overflow-y-auto rounded-xl border border-gray-700/50 bg-gray-800 shadow-xl">
-          {filtered.map((place) => (
-            <li key={`location-search-${place}`}>
-              <Link
-                to={`/weather/${place}`}
-                className="flex w-full items-center gap-2 border-b border-gray-700/30 px-4 py-3 text-left text-sm text-gray-300 transition-colors last:border-0 hover:bg-gray-700/50 hover:text-white"
-              >
-                <span className="text-gray-600">📍</span>
-                {displayLocation(place)}
-              </Link>
-            </li>
-          ))}
-        </ul>
-      )}
+      {value &&
+        (!filtered.length ? (
+          <NoResultsMessage type="notFound" />
+        ) : (
+          <ul className="absolute left-0 right-0 top-full z-20 mt-2 max-h-80 overflow-y-auto rounded-xl border border-gray-700/50 bg-gray-800 shadow-xl">
+            {filtered.map((place) => (
+              <li key={`location-search-${place}`}>
+                <Link
+                  to={`/weather/${place}`}
+                  className="flex w-full items-center gap-2 border-b border-gray-700/30 px-4 py-3 text-left text-sm text-gray-300 transition-colors last:border-0 hover:bg-gray-700/50 hover:text-white"
+                >
+                  <span className="text-gray-600">📍</span>
+                  {displayLocation(place)}
+                </Link>
+              </li>
+            ))}
+          </ul>
+        ))}
     </div>
   )
 }
