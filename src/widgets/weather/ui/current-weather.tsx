@@ -6,6 +6,32 @@ import HourlyWeather, {
 import Skeleton from '@/shared/ui/skeleton'
 import WeatherIcon from '@/shared/ui/weather-icon'
 
+interface WeatherErrorProps {
+  type: 'geo' | 'weather'
+}
+
+const ERROR_MESSAGES = {
+  geo: {
+    title: '위치 정보를 가져올 수 없습니다',
+    description: '브라우저 설정에서 위치 권한을 허용한 뒤 새로고침해 주세요',
+  },
+  weather: {
+    title: '날씨 정보를 불러올 수 없습니다',
+    description: '잠시 후 다시 시도해 주세요',
+  },
+}
+
+const WeatherError = ({ type }: WeatherErrorProps) => {
+  const { title, description } = ERROR_MESSAGES[type]
+
+  return (
+    <div className="flex min-h-[256px] flex-col items-center justify-center py-8 text-center md:min-h-[280px]">
+      <p className="text-sm text-blue-200">{title}</p>
+      <p className="mt-1 text-xs text-blue-300/60">{description}</p>
+    </div>
+  )
+}
+
 const WeatherSkeleton = () => {
   return (
     <>
@@ -42,18 +68,7 @@ const CurrentWeather = () => {
           <span>현재 위치</span>
         </div>
         {geoError || isError ? (
-          <div className="flex min-h-[256px] flex-col items-center justify-center py-8 text-center md:min-h-[280px]">
-            <p className="text-sm text-blue-200">
-              {geoError
-                ? '위치 정보를 가져올 수 없습니다'
-                : '날씨 정보를 불러올 수 없습니다'}
-            </p>
-            <p className="mt-1 text-xs text-blue-300/60">
-              {geoError
-                ? '브라우저 설정에서 위치 권한을 허용한 뒤 새로고침해 주세요'
-                : '잠시 후 다시 시도해 주세요'}
-            </p>
-          </div>
+          <WeatherError type={geoError ? 'geo' : 'weather'} />
         ) : (
           <>
             <p
