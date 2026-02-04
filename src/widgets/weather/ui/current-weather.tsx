@@ -6,10 +6,6 @@ import HourlyWeather, {
 import Skeleton from '@/shared/ui/skeleton'
 import WeatherIcon from '@/shared/ui/weather-icon'
 
-interface WeatherErrorProps {
-  type: 'geo' | 'weather'
-}
-
 const ERROR_MESSAGES = {
   geo: {
     title: '위치 정보를 가져올 수 없습니다',
@@ -19,6 +15,10 @@ const ERROR_MESSAGES = {
     title: '날씨 정보를 불러올 수 없습니다',
     description: '잠시 후 다시 시도해 주세요',
   },
+} as const
+
+interface WeatherErrorProps {
+  type: keyof typeof ERROR_MESSAGES
 }
 
 const WeatherError = ({ type }: WeatherErrorProps) => {
