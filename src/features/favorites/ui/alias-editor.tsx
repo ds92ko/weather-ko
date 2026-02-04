@@ -33,10 +33,7 @@ const AliasEditor = ({
 }: AliasEditorProps) => {
   const id = useId()
   const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === 'Enter') {
-      const value = ref?.current?.value.trim() || null
-      onSave(value)
-    }
+    if (e.key === 'Enter') onSave(e.currentTarget.value.trim() || null)
     if (e.key === 'Escape') onCancel()
   }
 
