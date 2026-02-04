@@ -1,5 +1,5 @@
 import useFavorites from '@/features/favorites/lib/use-favorites'
-import FavoriteCard from '@/features/favorites/ui/favorite-card'
+import FavoriteCard from '@/widgets/favorite/ui/favorite-card'
 
 interface FavoriteListProps {
   onSearchFocus: () => void
