@@ -42,6 +42,27 @@ const WEATHER_ICON_MAP: WeatherIconMap = {
   '50n': WiNightFog,
 }
 
+const WEATHER_COLOR_MAP: Record<WeatherIconCode, string> = {
+  '01d': 'text-yellow-400',
+  '01n': 'text-indigo-300',
+  '02d': 'text-yellow-300',
+  '02n': 'text-indigo-300',
+  '03d': 'text-gray-300',
+  '03n': 'text-gray-300',
+  '04d': 'text-gray-400',
+  '04n': 'text-gray-400',
+  '09d': 'text-blue-300',
+  '09n': 'text-blue-300',
+  '10d': 'text-blue-400',
+  '10n': 'text-blue-400',
+  '11d': 'text-yellow-300',
+  '11n': 'text-yellow-300',
+  '13d': 'text-sky-200',
+  '13n': 'text-sky-200',
+  '50d': 'text-gray-400',
+  '50n': 'text-gray-400',
+}
+
 interface WeatherIconProps {
   code: WeatherIconCode
   className?: string
@@ -50,7 +71,7 @@ interface WeatherIconProps {
 const WeatherIcon = ({ code, className }: WeatherIconProps) => {
   const Icon = WEATHER_ICON_MAP[code] || WiDaySunny
 
-  return <Icon className={className} />
+  return <Icon className={`${WEATHER_COLOR_MAP[code]} ${className}`} />
 }
 
 export default WeatherIcon
