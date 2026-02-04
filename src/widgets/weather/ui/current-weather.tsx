@@ -6,9 +6,31 @@ import HourlyWeather, {
 import Skeleton from '@/shared/ui/skeleton'
 import WeatherIcon from '@/shared/ui/weather-icon'
 
+const WeatherSkeleton = () => {
+  return (
+    <>
+      <div className="flex flex-wrap items-center justify-between gap-2">
+        <Skeleton
+          className="h-14 w-14 md:h-20 md:w-20"
+          variant="circle"
+          theme="light"
+        />
+        <Skeleton className="h-12 w-16 md:h-20 md:w-24" theme="light" />
+      </div>
+      <div className="mt-2 flex flex-wrap-reverse items-center justify-between gap-2">
+        <Skeleton className="h-[20px] w-32" theme="light" />
+        <Skeleton className="h-[20px] w-24" theme="light" />
+      </div>
+      <div className="mt-6 border-t border-white/10 pt-6">
+        <HourlyWeatherSkeleton variant="inline" />
+      </div>
+    </>
+  )
+}
+
 const CurrentWeather = () => {
   const { coord, geoError } = useGeolocation()
-  const { weather, currentPlace, isLoading } = useCurrentWeather(coord)
+  const { weather, currentPlace, isLoading, isError } = useCurrentWeather(coord)
 
   return (
     <section className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-blue-600 via-blue-700 to-indigo-800 p-6 md:p-8">
@@ -19,61 +41,54 @@ const CurrentWeather = () => {
           <span>📍</span>
           <span>현재 위치</span>
         </div>
-        {geoError ? (
+        {geoError || isError ? (
           <div className="flex min-h-[256px] flex-col items-center justify-center py-8 text-center md:min-h-[280px]">
             <p className="text-sm text-blue-200">
-              위치 정보를 가져올 수 없습니다
+              {geoError
+                ? '위치 정보를 가져올 수 없습니다'
+                : '날씨 정보를 불러올 수 없습니다'}
             </p>
             <p className="mt-1 text-xs text-blue-300/60">
-              브라우저 설정에서 위치 권한을 허용한 뒤 새로고침해 주세요
+              {geoError
+                ? '브라우저 설정에서 위치 권한을 허용한 뒤 새로고침해 주세요'
+                : '잠시 후 다시 시도해 주세요'}
             </p>
           </div>
-        ) : !coord || isLoading || !weather ? (
-          <>
-            <p className="mb-4 animate-pulse text-sm font-medium text-white/90">
-              {!coord ? '위치를 가져오는 중...' : '날씨 정보를 불러오는 중...'}
-            </p>
-            <div className="flex items-center justify-between">
-              <Skeleton className="h-12 w-16 md:h-20 md:w-24" theme="light" />
-              <Skeleton
-                className="h-14 w-14 md:h-20 md:w-20"
-                variant="circle"
-                theme="light"
-              />
-            </div>
-            <div className="mt-2 flex items-center justify-between">
-              <Skeleton className="h-[20px] w-28" theme="light" />
-              <Skeleton className="h-[20px] w-24" theme="light" />
-            </div>
-            <div className="mt-6 border-t border-white/10 pt-6">
-              <HourlyWeatherSkeleton variant="inline" />
-            </div>
-          </>
         ) : (
           <>
-            <p className="mb-4 text-sm font-medium text-white/90">
-              {currentPlace}
+            <p
+              className={`mb-4 truncate text-sm font-medium text-white/90 ${!coord || isLoading || !weather ? 'animate-pulse' : ''}`}
+            >
+              {!coord
+                ? '위치를 가져오는 중...'
+                : isLoading
+                  ? '날씨 정보를 불러오는 중...'
+                  : currentPlace}
             </p>
-            <div className="flex items-center justify-between">
-              <p className="text-5xl font-extralight tracking-tighter text-white md:text-7xl">
-                {weather.temp}°
-              </p>
-              <WeatherIcon
-                code={weather.icon}
-                className="h-14 w-14 text-white/90 md:h-20 md:w-20"
-              />
-            </div>
-            <div className="mt-2 flex items-center justify-between">
-              <p className="text-sm text-blue-200">{weather.description}</p>
-              <div className="flex gap-3 text-sm text-blue-200">
-                <span>↓ {weather.min}°</span>
-                <span>↑ {weather.max}°</span>
-              </div>
-            </div>
-            {weather.hourly.length > 0 && (
-              <div className="mt-6 border-t border-white/10 pt-6">
-                <HourlyWeather data={weather.hourly} variant="inline" />
-              </div>
+            {weather ? (
+              <>
+                <div className="flex flex-wrap items-center justify-between gap-2">
+                  <WeatherIcon
+                    code={weather.icon}
+                    className="h-14 w-14 md:h-20 md:w-20"
+                  />
+                  <p className="text-5xl font-extralight tracking-tighter text-white md:text-7xl">
+                    {weather.temp}°
+                  </p>
+                </div>
+                <div className="mt-2 flex flex-wrap-reverse items-center justify-between gap-2">
+                  <p className="text-sm text-blue-200">{weather.description}</p>
+                  <div className="flex gap-3 text-sm text-blue-200">
+                    <span>↓ {weather.min}°</span>
+                    <span>↑ {weather.max}°</span>
+                  </div>
+                </div>
+                <div className="mt-6 border-t border-white/10 pt-6">
+                  <HourlyWeather data={weather.hourly} variant="inline" />
+                </div>
+              </>
+            ) : (
+              <WeatherSkeleton />
             )}
           </>
         )}
