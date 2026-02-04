@@ -12,12 +12,16 @@ const useLocationWeather = (location: string) => {
     ...locationQueries.geocode(placeName),
     enabled: !!location && DISTRICTS.includes(location),
   })
-  const { data: weather, isLoading } = useQuery({
+  const {
+    data: weather,
+    isLoading,
+    isError,
+  } = useQuery({
     ...weatherQueries.weather(coord ?? DEFAULT_COORD),
     enabled: !!coord,
   })
 
-  return { placeName, weather, isLoading }
+  return { placeName, weather, isLoading, isError }
 }
 
 export default useLocationWeather
