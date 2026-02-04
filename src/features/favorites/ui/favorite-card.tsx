@@ -4,7 +4,7 @@ import useLocationWeather from '@/features/weather/lib/use-location-weather'
 import Skeleton from '@/shared/ui/skeleton'
 import WeatherIcon from '@/shared/ui/weather-icon'
 import { cva } from 'class-variance-authority'
-import { useState } from 'react'
+import { useRef, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 
 interface FavoriteCardProps {
@@ -51,6 +51,7 @@ const FavoriteCard = ({
   onRemove,
 }: FavoriteCardProps) => {
   const navigate = useNavigate()
+  const inputRef = useRef<HTMLInputElement>(null)
   const [isEditing, setIsEditing] = useState(false)
   const { placeName, weather, isLoading } = useLocationWeather(favorite.name)
 
@@ -59,8 +60,9 @@ const FavoriteCard = ({
     navigate(`/weather/${favorite.name}`)
   }
   const handleCancel = () => setIsEditing(false)
-  const handleSave = (alias: string | null) => {
-    onUpdateAlias(favorite.id, alias)
+  const handleSave = () => {
+    const value = inputRef.current?.value.trim() || null
+    onUpdateAlias(favorite.id, value)
     handleCancel()
   }
   const handleRemove = () => onRemove(favorite.id)
@@ -72,6 +74,7 @@ const FavoriteCard = ({
           <div className="min-w-0 grow pr-2">
             {isEditing ? (
               <AliasEditor
+                ref={inputRef}
                 defaultValue={favorite.alias || ''}
                 onSave={handleSave}
                 onCancel={handleCancel}
@@ -116,7 +119,7 @@ const FavoriteCard = ({
       <div className="flex border-t border-gray-700/30">
         <button
           onClick={() => {
-            if (isEditing) handleSave(null)
+            if (isEditing) handleSave()
             else setIsEditing(true)
           }}
           className={styles.button({ side: 'left' })}
