@@ -1,7 +1,7 @@
+import useAliasEditor from '@/features/favorites/lib/use-alias-editor'
 import useFavorites from '@/features/favorites/lib/use-favorites'
 import AliasEditor from '@/features/favorites/ui/alias-editor'
 import { cva } from 'class-variance-authority'
-import { useRef, useState } from 'react'
 import { BiArrowBack } from 'react-icons/bi'
 import { Link } from 'react-router-dom'
 
@@ -38,23 +38,19 @@ interface FavoriteToolbarProps {
 }
 
 const FavoriteToolbar = ({ location }: FavoriteToolbarProps) => {
-  const inputRef = useRef<HTMLInputElement>(null)
-  const [isEditing, setIsEditing] = useState(false)
   const { isFull, getFavorite, addFavorite, removeFavorite, updateAlias } =
     useFavorites()
   const favorite = getFavorite(location)
-
-  const handleCancel = () => setIsEditing(false)
+  const { inputRef, isEditing, handleSave, handleCancel, startEditing } =
+    useAliasEditor((alias) => {
+      if (!favorite) return
+      updateAlias(favorite.id, alias)
+    })
   const handleToggleFavorite = () => {
     if (favorite) {
       if (isEditing) handleCancel()
       else removeFavorite(favorite.id)
     } else addFavorite(location)
-  }
-  const handleSave = () => {
-    if (!favorite) return
-    updateAlias(favorite.id, inputRef.current?.value.trim() || null)
-    setIsEditing(false)
   }
 
   return (
@@ -88,7 +84,7 @@ const FavoriteToolbar = ({ location }: FavoriteToolbarProps) => {
           <button
             onClick={() => {
               if (isEditing) handleSave()
-              else setIsEditing(true)
+              else startEditing()
             }}
             className="rounded-lg border border-gray-700/50 bg-gray-800 px-3 py-2 text-sm text-gray-400 transition-colors hover:text-white"
           >
