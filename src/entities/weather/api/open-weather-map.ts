@@ -7,6 +7,7 @@ import type {
   WeatherQuery,
 } from '@/entities/weather/model/open-weather-map'
 import { ApiError } from '@/shared/api/api-error'
+import { formatHourlyTime } from '@/shared/lib/format'
 
 const getFreeWeather = async ({ lat, lon }: WeatherQuery) => {
   const params = `lat=${lat}&lon=${lon}&appid=${API_KEY}&units=metric&lang=kr`
@@ -40,10 +41,10 @@ const getFreeWeather = async ({ lat, lon }: WeatherQuery) => {
     icon: current.weather[0]?.icon ?? '01d',
     min: Math.round(Math.min(current.main.temp_min, forecastMin)),
     max: Math.round(Math.max(current.main.temp_max, forecastMax)),
-    hourly: forecast.list.slice(0, 8).map((item, i) => ({
-      time: i === 0 ? '지금' : `${new Date(item.dt * 1000).getHours()}시`,
-      temp: Math.round(item.main.temp),
-      icon: item.weather[0]?.icon ?? '01d',
+    hourly: forecast.list.slice(0, 8).map((h, i) => ({
+      time: formatHourlyTime(h.dt, i),
+      temp: Math.round(h.main.temp),
+      icon: h.weather[0]?.icon ?? '01d',
     })),
   }
 }
@@ -67,7 +68,7 @@ const openWeatherMapApi: OpenWeatherMapApi = {
       min: Math.round(data.daily[0]?.temp.min ?? 0),
       max: Math.round(data.daily[0]?.temp.max ?? 0),
       hourly: data.hourly.slice(0, 24).map((h, i) => ({
-        time: i === 0 ? '지금' : `${new Date(h.dt * 1000).getHours()}시`,
+        time: formatHourlyTime(h.dt, i),
         temp: Math.round(h.temp),
         icon: h.weather[0]?.icon ?? '01d',
       })),
