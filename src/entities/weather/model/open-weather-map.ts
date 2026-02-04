@@ -22,6 +22,24 @@ export interface OneCallResponse {
   hourly: OneCallHourly[]
 }
 
+interface CurrentWeather extends OneCallWeather {
+  id: number
+  main: string
+}
+export interface CurrentWeatherResponse {
+  weather: CurrentWeather[]
+  main: { temp: number; temp_min: number; temp_max: number }
+}
+
+interface ForecastItem {
+  dt: number
+  main: { temp: number }
+  weather: { icon: WeatherIconCode }[]
+}
+export interface ForecastResponse {
+  list: ForecastItem[]
+}
+
 export type WeatherQuery = Coord
 interface WeatherResult {
   temp: number
