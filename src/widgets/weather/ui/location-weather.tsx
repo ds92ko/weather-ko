@@ -1,5 +1,6 @@
 import type { WeatherResult } from '@/entities/weather/model/open-weather-map'
 import Skeleton from '@/shared/ui/skeleton'
+import WeatherCard from '@/shared/ui/weather-card'
 import WeatherIcon from '@/shared/ui/weather-icon'
 
 interface LocationWeatherProps {
@@ -50,41 +51,37 @@ const LocationWeather = ({
   isError,
 }: LocationWeatherProps) => {
   return (
-    <section className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-blue-600 via-blue-700 to-indigo-800 p-6 md:p-8">
-      <div className="absolute right-0 top-0 h-40 w-40 -translate-y-1/2 translate-x-1/2 rounded-full bg-white/5" />
-      <div className="absolute bottom-0 left-0 h-24 w-24 -translate-x-1/2 translate-y-1/2 rounded-full bg-white/5" />
-      <div className="relative z-10 text-center">
-        <h3 className="truncate text-sm font-medium text-white/90">
-          {placeName}
-        </h3>
-        {isError ? (
-          <WeatherError />
-        ) : isLoading || !weather ? (
-          <WeatherSkeleton />
-        ) : (
-          <>
-            <div className="mt-6 flex items-center justify-center gap-3">
-              <WeatherIcon
-                code={weather.icon}
-                className="h-14 w-14 md:h-20 md:w-20"
-              />
-              <p className="text-5xl font-extralight tracking-tighter text-white drop-shadow-sm md:text-7xl">
-                {weather.temp}°
-              </p>
-            </div>
-            <p className="mt-6 text-sm text-white/90">{weather.description}</p>
-            <div className="mt-3 flex flex-wrap items-center justify-center gap-2">
-              <span className="rounded-full bg-white/10 px-3 py-1 text-xs font-medium text-blue-100 ring-1 ring-white/20">
-                최저 {weather.min}°
-              </span>
-              <span className="rounded-full bg-white/10 px-3 py-1 text-xs font-medium text-blue-100 ring-1 ring-white/20">
-                최고 {weather.max}°
-              </span>
-            </div>
-          </>
-        )}
-      </div>
-    </section>
+    <WeatherCard>
+      <h3 className="truncate text-sm font-medium text-white/90">
+        {placeName}
+      </h3>
+      {isError ? (
+        <WeatherError />
+      ) : isLoading || !weather ? (
+        <WeatherSkeleton />
+      ) : (
+        <>
+          <div className="mt-6 flex items-center justify-center gap-3">
+            <WeatherIcon
+              code={weather.icon}
+              className="h-14 w-14 md:h-20 md:w-20"
+            />
+            <p className="text-5xl font-extralight tracking-tighter text-white drop-shadow-sm md:text-7xl">
+              {weather.temp}°
+            </p>
+          </div>
+          <p className="mt-6 text-sm text-white/90">{weather.description}</p>
+          <div className="mt-3 flex flex-wrap items-center justify-center gap-2">
+            <span className="rounded-full bg-white/10 px-3 py-1 text-xs font-medium text-blue-100 ring-1 ring-white/20">
+              최저 {weather.min}°
+            </span>
+            <span className="rounded-full bg-white/10 px-3 py-1 text-xs font-medium text-blue-100 ring-1 ring-white/20">
+              최고 {weather.max}°
+            </span>
+          </div>
+        </>
+      )}
+    </WeatherCard>
   )
 }
 

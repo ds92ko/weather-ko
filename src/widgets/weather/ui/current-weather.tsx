@@ -4,6 +4,7 @@ import HourlyWeather, {
   HourlyWeatherSkeleton,
 } from '@/shared/ui/hourly-weather'
 import Skeleton from '@/shared/ui/skeleton'
+import WeatherCard from '@/shared/ui/weather-card'
 import WeatherIcon from '@/shared/ui/weather-icon'
 import { cva } from 'class-variance-authority'
 
@@ -70,58 +71,54 @@ const CurrentWeather = () => {
   const { weather, currentPlace, isLoading, isError } = useCurrentWeather(coord)
 
   return (
-    <section className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-blue-600 via-blue-700 to-indigo-800 p-6 md:p-8">
-      <div className="absolute right-0 top-0 h-40 w-40 -translate-y-1/2 translate-x-1/2 rounded-full bg-white/5" />
-      <div className="absolute bottom-0 left-0 h-24 w-24 -translate-x-1/2 translate-y-1/2 rounded-full bg-white/5" />
-      <div className="relative z-10">
-        <div className="mb-1 flex items-center gap-2 text-xs text-blue-200">
-          <span>📍</span>
-          <span>현재 위치</span>
-        </div>
-        {geoError || isError ? (
-          <WeatherError type={geoError ? 'geo' : 'weather'} />
-        ) : (
-          <>
-            <p
-              className={styles({
-                loading: !coord || isLoading,
-              })}
-            >
-              {!coord
-                ? '위치를 가져오는 중...'
-                : isLoading
-                  ? '날씨 정보를 불러오는 중...'
-                  : currentPlace}
-            </p>
-            {weather ? (
-              <>
-                <div className="flex flex-wrap items-center justify-between gap-2">
-                  <WeatherIcon
-                    code={weather.icon}
-                    className="h-14 w-14 md:h-20 md:w-20"
-                  />
-                  <p className="text-5xl font-extralight tracking-tighter text-white md:text-7xl">
-                    {weather.temp}°
-                  </p>
-                </div>
-                <div className="mt-2 flex flex-wrap-reverse items-center justify-between gap-2">
-                  <p className="text-sm text-blue-200">{weather.description}</p>
-                  <div className="flex gap-3 text-sm text-blue-200">
-                    <span>↓ {weather.min}°</span>
-                    <span>↑ {weather.max}°</span>
-                  </div>
-                </div>
-                <div className="mt-6 border-t border-white/10 pt-6">
-                  <HourlyWeather data={weather.hourly} variant="inline" />
-                </div>
-              </>
-            ) : (
-              <WeatherSkeleton />
-            )}
-          </>
-        )}
+    <WeatherCard>
+      <div className="mb-1 flex items-center gap-2 text-xs text-blue-200">
+        <span>📍</span>
+        <span>현재 위치</span>
       </div>
-    </section>
+      {geoError || isError ? (
+        <WeatherError type={geoError ? 'geo' : 'weather'} />
+      ) : (
+        <>
+          <p
+            className={styles({
+              loading: !coord || isLoading,
+            })}
+          >
+            {!coord
+              ? '위치를 가져오는 중...'
+              : isLoading
+                ? '날씨 정보를 불러오는 중...'
+                : currentPlace}
+          </p>
+          {weather ? (
+            <>
+              <div className="flex flex-wrap items-center justify-between gap-2">
+                <WeatherIcon
+                  code={weather.icon}
+                  className="h-14 w-14 md:h-20 md:w-20"
+                />
+                <p className="text-5xl font-extralight tracking-tighter text-white md:text-7xl">
+                  {weather.temp}°
+                </p>
+              </div>
+              <div className="mt-2 flex flex-wrap-reverse items-center justify-between gap-2">
+                <p className="text-sm text-blue-200">{weather.description}</p>
+                <div className="flex gap-3 text-sm text-blue-200">
+                  <span>↓ {weather.min}°</span>
+                  <span>↑ {weather.max}°</span>
+                </div>
+              </div>
+              <div className="mt-6 border-t border-white/10 pt-6">
+                <HourlyWeather data={weather.hourly} variant="inline" />
+              </div>
+            </>
+          ) : (
+            <WeatherSkeleton />
+          )}
+        </>
+      )}
+    </WeatherCard>
   )
 }
 
