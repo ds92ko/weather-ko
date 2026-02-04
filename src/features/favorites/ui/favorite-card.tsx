@@ -29,7 +29,7 @@ const styles = {
     }
   ),
   button: cva(
-    'flex flex-1 items-center justify-center gap-1 py-2 text-xs transition-colors',
+    'flex flex-1 items-center justify-center py-2 text-xs transition-colors',
     {
       variants: {
         side: {
@@ -124,8 +124,7 @@ const FavoriteCard = ({
           }}
           className={styles.button({ side: 'left' })}
         >
-          <span>{isEditing ? '✅' : '✏️'}</span>
-          <span>{isEditing ? '저장' : '수정'}</span>
+          {isEditing ? '✅ 저장' : '✏️ 수정'}
         </button>
         <div className="w-px bg-gray-700/30" />
         <button
@@ -135,8 +134,7 @@ const FavoriteCard = ({
           }}
           className={styles.button({ side: 'right' })}
         >
-          <span>{isEditing ? '❌' : '🗑'}</span>
-          <span>{isEditing ? '취소' : '삭제'}</span>
+          {isEditing ? '❌ 취소' : '🗑 삭제'}
         </button>
       </div>
     </div>
