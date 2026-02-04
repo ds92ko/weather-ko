@@ -1,6 +1,7 @@
 import type { WeatherResult } from '@/entities/weather/model/open-weather-map'
 import Skeleton from '@/shared/ui/skeleton'
 import WeatherCard from '@/shared/ui/weather-card'
+import WeatherError from '@/shared/ui/weather-error'
 import WeatherIcon from '@/shared/ui/weather-icon'
 
 interface LocationWeatherProps {
@@ -8,17 +9,6 @@ interface LocationWeatherProps {
   weather?: WeatherResult
   isLoading: boolean
   isError: boolean
-}
-
-const WeatherError = () => {
-  return (
-    <div className="flex min-h-[160px] flex-col items-center justify-center py-8 text-center md:min-h-[184px]">
-      <p className="text-sm text-blue-200">날씨 정보를 불러올 수 없습니다</p>
-      <p className="mt-1 text-xs text-blue-300/60">
-        잠시 후 다시 시도해 주세요
-      </p>
-    </div>
-  )
 }
 
 const WeatherSkeleton = () => {
@@ -56,7 +46,7 @@ const LocationWeather = ({
         {placeName}
       </h3>
       {isError ? (
-        <WeatherError />
+        <WeatherError type="weather" size="sm" />
       ) : isLoading || !weather ? (
         <WeatherSkeleton />
       ) : (
