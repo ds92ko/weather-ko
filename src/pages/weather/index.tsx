@@ -5,7 +5,7 @@ import useTitle from '@/shared/lib/use-title'
 import FavoriteToolbar from '@/widgets/favorite/ui/favorite-toolbar'
 import HourlyOverview from '@/widgets/weather/ui/hourly-overview'
 import LocationWeather from '@/widgets/weather/ui/location-weather'
-import TempDistribution from '@/widgets/weather/ui/temp-distribution-section'
+import TempDistribution from '@/widgets/weather/ui/temp-distribution'
 import { useParams } from 'react-router-dom'
 
 const Weather = () => {
