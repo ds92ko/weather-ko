@@ -1,8 +1,37 @@
 import useFavorites from '@/features/favorites/lib/use-favorites'
 import AliasEditor from '@/features/favorites/ui/alias-editor'
+import { cva } from 'class-variance-authority'
 import { useRef, useState } from 'react'
 import { BiArrowBack } from 'react-icons/bi'
 import { Link } from 'react-router-dom'
+
+const styles = cva(
+  'rounded-lg px-4 py-2 text-sm font-medium transition-all disabled:cursor-not-allowed disabled:opacity-50',
+  {
+    variants: {
+      isFavorite: {
+        true: '',
+        false:
+          'border border-gray-700/50 bg-gray-800 text-gray-400 enabled:hover:text-white',
+      },
+      isEditing: {
+        true: 'border border-gray-700/50 bg-gray-800 text-gray-400 enabled:hover:text-white',
+        false: '',
+      },
+    },
+    compoundVariants: [
+      {
+        isFavorite: true,
+        isEditing: false,
+        class: 'border border-yellow-500/30 bg-yellow-500/20 text-yellow-400',
+      },
+    ],
+    defaultVariants: {
+      isFavorite: false,
+      isEditing: false,
+    },
+  }
+)
 
 interface FavoriteToolbarProps {
   location: string
@@ -71,13 +100,7 @@ const FavoriteToolbar = ({ location }: FavoriteToolbarProps) => {
         <button
           onClick={handleToggleFavorite}
           disabled={!favorite && isFull}
-          className={`rounded-lg px-4 py-2 text-sm font-medium transition-all disabled:cursor-not-allowed disabled:opacity-50 ${
-            favorite
-              ? isEditing
-                ? 'border border-gray-700/50 bg-gray-800 text-gray-400 enabled:hover:text-white'
-                : 'border border-yellow-500/30 bg-yellow-500/20 text-yellow-400'
-              : 'border border-gray-700/50 bg-gray-800 text-gray-400 enabled:hover:text-white'
-          }`}
+          className={styles({ isFavorite: !!favorite, isEditing })}
         >
           {favorite
             ? isEditing

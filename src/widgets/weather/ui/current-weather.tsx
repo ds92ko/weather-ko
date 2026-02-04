@@ -5,6 +5,17 @@ import HourlyWeather, {
 } from '@/shared/ui/hourly-weather'
 import Skeleton from '@/shared/ui/skeleton'
 import WeatherIcon from '@/shared/ui/weather-icon'
+import { cva } from 'class-variance-authority'
+
+const styles = cva('mb-4 truncate text-sm font-medium text-white/90', {
+  variants: {
+    loading: {
+      true: 'animate-pulse',
+      false: '',
+    },
+  },
+  defaultVariants: { loading: false },
+})
 
 const ERROR_MESSAGES = {
   geo: {
@@ -72,7 +83,9 @@ const CurrentWeather = () => {
         ) : (
           <>
             <p
-              className={`mb-4 truncate text-sm font-medium text-white/90 ${!coord || isLoading || !weather ? 'animate-pulse' : ''}`}
+              className={styles({
+                loading: !coord || isLoading,
+              })}
             >
               {!coord
                 ? '위치를 가져오는 중...'
