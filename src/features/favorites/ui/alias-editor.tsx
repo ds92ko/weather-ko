@@ -2,16 +2,16 @@ import { cva } from 'class-variance-authority'
 import { useId, type KeyboardEvent, type RefObject } from 'react'
 
 const styles = cva(
-  'w-full rounded border px-2 py-1 text-xs text-white outline-none',
+  'w-full rounded border text-white outline-none border-blue-500/50 bg-gray-700',
   {
     variants: {
-      theme: {
-        light: 'border-blue-400/50 bg-white/10',
-        dark: 'border-blue-500/50 bg-gray-700',
+      size: {
+        sm: 'px-2 py-1 text-xs',
+        lg: 'px-3 py-2 text-sm',
       },
     },
     defaultVariants: {
-      theme: 'dark',
+      size: 'sm',
     },
   }
 )
@@ -21,7 +21,7 @@ interface AliasEditorProps {
   defaultValue: string
   onSave: (value: string | null) => void
   onCancel: () => void
-  theme?: 'light' | 'dark'
+  size?: 'sm' | 'lg'
 }
 
 const AliasEditor = ({
@@ -29,7 +29,7 @@ const AliasEditor = ({
   defaultValue,
   onSave,
   onCancel,
-  theme = 'dark',
+  size = 'sm',
 }: AliasEditorProps) => {
   const id = useId()
   const handleKeyDown = (e: KeyboardEvent<HTMLInputElement>) => {
@@ -47,7 +47,7 @@ const AliasEditor = ({
       name="alias-editor"
       defaultValue={defaultValue}
       placeholder="별칭 입력 (선택사항)"
-      className={styles({ theme })}
+      className={styles({ size })}
       autoFocus
       onKeyDown={handleKeyDown}
     />
