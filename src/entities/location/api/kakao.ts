@@ -4,6 +4,7 @@ import type {
   KakaoApi,
   RegionNameResponse,
 } from '@/entities/location/model/kakao'
+import { ApiError } from '@/shared/api/api-error'
 
 const headers = { Authorization: `KakaoAK ${API_KEY}` }
 
@@ -13,7 +14,7 @@ const kakaoApi: KakaoApi = {
       `${BASE_URL}/search/address.json?query=${encodeURIComponent(query)}`,
       { headers }
     )
-    if (!res.ok) throw { status: res.status }
+    if (!res.ok) throw new ApiError(res.status)
 
     const data: GeocodeResponse = await res.json()
     const doc = data.documents?.[0]
@@ -30,7 +31,7 @@ const kakaoApi: KakaoApi = {
       `${BASE_URL}/geo/coord2regioncode.json?x=${lon}&y=${lat}`,
       { headers }
     )
-    if (!res.ok) throw { status: res.status }
+    if (!res.ok) throw new ApiError(res.status)
 
     const data: RegionNameResponse = await res.json()
     const doc = data.documents?.find(({ region_type }) => region_type === 'B')

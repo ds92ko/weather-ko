@@ -6,6 +6,7 @@ import type {
   OpenWeatherMapApi,
   WeatherQuery,
 } from '@/entities/weather/model/open-weather-map'
+import { ApiError } from '@/shared/api/api-error'
 
 const getFreeWeather = async ({ lat, lon }: WeatherQuery) => {
   const params = `lat=${lat}&lon=${lon}&appid=${API_KEY}&units=metric&lang=kr`
@@ -55,7 +56,7 @@ const openWeatherMapApi: OpenWeatherMapApi = {
 
     if (res.status === 429) return getFreeWeather({ lat, lon })
 
-    if (!res.ok) throw { status: res.status }
+    if (!res.ok) throw new ApiError(res.status)
 
     const data: OneCallResponse = await res.json()
 
