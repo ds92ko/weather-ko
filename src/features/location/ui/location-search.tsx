@@ -7,30 +7,49 @@ interface LocationSearchProps {
   ref?: Ref<HTMLInputElement>
 }
 
+const NO_RESULTS_MESSAGES = {
+  empty: {
+    title: '시, 구, 동 단위로 검색해보세요',
+    description: '예: 서울특별시, 종로구, 청운동',
+  },
+  notFound: {
+    title: '검색 결과가 없습니다',
+    description: '다른 검색어를 입력해보세요',
+  },
+} as const
+
+interface NoResultsProps {
+  type: keyof typeof NO_RESULTS_MESSAGES
+}
+
+const NoResultsMessage = ({ type }: NoResultsProps) => {
+  const { title, description } = NO_RESULTS_MESSAGES[type]
+
+  return (
+    <div className="absolute left-0 right-0 top-full z-20 mt-2 rounded-xl border border-gray-700/50 bg-gray-800 px-4 py-5 text-center shadow-xl">
+      <p className="text-xs text-gray-500">{title}</p>
+      <p className="mt-1 text-xs text-gray-600">{description}</p>
+    </div>
+  )
+}
+
 const LocationSearch = ({ ref }: LocationSearchProps) => {
   const id = useId()
-  const [searchQuery, setSearchQuery] = useState('')
-  const [showSearch, setShowSearch] = useState(false)
+  const [value, setValue] = useState('')
   const [isFocused, setIsFocused] = useState(false)
 
-  const filtered =
-    searchQuery.length > 0
-      ? DISTRICTS.filter((s) => displayLocation(s).includes(searchQuery.trim()))
-      : []
+  const filtered = value
+    ? DISTRICTS.filter((s) => displayLocation(s).includes(value.trim()))
+    : []
 
   const handleFocus = () => setIsFocused(true)
   const handleBlur = () => setIsFocused(false)
-  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setSearchQuery(e.target.value)
-    setShowSearch(e.target.value.length > 0)
-  }
-  const handleClear = () => {
-    setSearchQuery('')
-    setShowSearch(false)
-  }
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) =>
+    setValue(e.target.value)
+  const handleClear = () => setValue('')
 
   return (
-    <section className="relative">
+    <div className="relative">
       <div className="flex items-center rounded-xl border border-gray-700/50 bg-gray-800 px-4 py-3 transition-colors focus-within:border-blue-500/50">
         <span className="mr-3 text-lg text-gray-500">🔍</span>
         <input
@@ -39,13 +58,13 @@ const LocationSearch = ({ ref }: LocationSearchProps) => {
           name="location-search"
           type="search"
           placeholder="장소 검색 (시, 구, 동)"
-          value={searchQuery}
+          value={value}
           onFocus={handleFocus}
           onBlur={handleBlur}
           onChange={handleChange}
           className="w-full bg-transparent text-sm text-white placeholder-gray-500 outline-none"
         />
-        {searchQuery && (
+        {value && (
           <button
             onClick={handleClear}
             className="ml-2 text-gray-500 hover:text-white"
@@ -54,25 +73,10 @@ const LocationSearch = ({ ref }: LocationSearchProps) => {
           </button>
         )}
       </div>
-      {isFocused && !searchQuery && (
-        <div className="absolute left-0 right-0 top-full z-20 mt-2 rounded-xl border border-gray-700/50 bg-gray-800 px-4 py-5 text-center shadow-xl">
-          <p className="text-xs text-gray-500">
-            시, 구, 동 단위로 검색해보세요
-          </p>
-          <p className="mt-1 text-xs text-gray-600">
-            예: 서울특별시, 종로구, 청운동
-          </p>
-        </div>
-      )}
-      {showSearch && searchQuery && filtered.length === 0 && (
-        <div className="absolute left-0 right-0 top-full z-20 mt-2 rounded-xl border border-gray-700/50 bg-gray-800 px-4 py-5 text-center shadow-xl">
-          <p className="text-xs text-gray-500">검색 결과가 없습니다</p>
-          <p className="mt-1 text-xs text-gray-600">
-            다른 검색어를 입력해보세요
-          </p>
-        </div>
-      )}
-      {showSearch && filtered.length > 0 && (
+      {isFocused && !value && <NoResultsMessage type="empty" />}
+      {value && !filtered.length ? (
+        <NoResultsMessage type="notFound" />
+      ) : (
         <ul className="absolute left-0 right-0 top-full z-20 mt-2 max-h-80 overflow-y-auto rounded-xl border border-gray-700/50 bg-gray-800 shadow-xl">
           {filtered.map((place) => (
             <li key={`location-search-${place}`}>
@@ -87,7 +91,7 @@ const LocationSearch = ({ ref }: LocationSearchProps) => {
           ))}
         </ul>
       )}
-    </section>
+    </div>
   )
 }
 
