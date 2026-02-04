@@ -1,17 +1,27 @@
 import type { Coord } from '@/shared/model/coord'
 import { useEffect, useState } from 'react'
 
+let cachedCoord: Coord | null = null
+let cachedError = !navigator.geolocation
+let resolved = cachedError
+
 const useGeolocation = () => {
-  const [coord, setCoord] = useState<Coord | null>(null)
-  const [geoError, setGeoError] = useState(!navigator.geolocation)
+  const [coord, setCoord] = useState<Coord | null>(cachedCoord)
+  const [geoError, setGeoError] = useState(cachedError)
 
   useEffect(() => {
-    if (!navigator.geolocation) return
+    if (resolved) return
+
     navigator.geolocation.getCurrentPosition(
       (pos) => {
-        setCoord({ lat: pos.coords.latitude, lon: pos.coords.longitude })
+        const c = { lat: pos.coords.latitude, lon: pos.coords.longitude }
+        cachedCoord = c
+        resolved = true
+        setCoord(c)
       },
       () => {
+        cachedError = true
+        resolved = true
         setGeoError(true)
       }
     )
