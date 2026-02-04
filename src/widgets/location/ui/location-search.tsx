@@ -1,6 +1,6 @@
 import DISTRICTS from '@/shared/data/korea_districts.json' with { type: 'json' }
 import { displayLocation } from '@/shared/lib/format'
-import { useState, type ChangeEvent, type Ref } from 'react'
+import { useId, useState, type ChangeEvent, type Ref } from 'react'
 import { Link } from 'react-router-dom'
 
 interface LocationSearchProps {
@@ -8,6 +8,7 @@ interface LocationSearchProps {
 }
 
 const LocationSearch = ({ ref }: LocationSearchProps) => {
+  const id = useId()
   const [searchQuery, setSearchQuery] = useState('')
   const [showSearch, setShowSearch] = useState(false)
   const [isFocused, setIsFocused] = useState(false)
@@ -34,7 +35,9 @@ const LocationSearch = ({ ref }: LocationSearchProps) => {
         <span className="mr-3 text-lg text-gray-500">🔍</span>
         <input
           ref={ref}
-          type="text"
+          id={id}
+          name="location-search"
+          type="search"
           placeholder="장소 검색 (시, 구, 동)"
           value={searchQuery}
           onFocus={handleFocus}
