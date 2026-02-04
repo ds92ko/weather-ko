@@ -23,21 +23,21 @@ const store = createLocalStore<Favorite>({
 const useFavorites = () => {
   const favorites = useSyncExternalStore(store.subscribe, store.getState)
 
-  const addFavorite = useCallback((name: string) => {
-    const trimmed = name.trim()
-    if (!trimmed) return false
+  const addFavorite = useCallback((name?: string) => {
+    const trimmed = name?.trim()
+    if (!trimmed) return
     const current = store.getState()
-    if (current.length >= MAX_FAVORITES) return false
-    if (current.some((f) => f.name === trimmed)) return false
+    if (current.length >= MAX_FAVORITES) return
+    if (current.some((f) => f.name === trimmed)) return
 
     store.setState([
       ...current,
       { id: crypto.randomUUID(), name: trimmed, alias: null },
     ])
-    return true
   }, [])
 
-  const removeFavorite = useCallback((id: string) => {
+  const removeFavorite = useCallback((id?: string) => {
+    if (!id) return
     const current = store.getState()
     store.setState(current.filter((f) => f.id !== id))
   }, [])
@@ -51,8 +51,9 @@ const useFavorites = () => {
     )
   }, [])
 
-  const isFavorite = useCallback(
-    (name: string) => favorites.some((f) => f.name === name.trim()),
+  const getFavorite = useCallback(
+    (name?: string) =>
+      name ? favorites.find((f) => f.name === name.trim()) : undefined,
     [favorites]
   )
 
@@ -62,7 +63,7 @@ const useFavorites = () => {
     addFavorite,
     removeFavorite,
     updateAlias,
-    isFavorite,
+    getFavorite,
   } as const
 }
 
