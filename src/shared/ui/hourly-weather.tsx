@@ -1,5 +1,6 @@
 import useDragScroll from '@/shared/lib/use-drag-scroll'
 import type { Hourly } from '@/shared/model/weather'
+import Skeleton from '@/shared/ui/skeleton'
 import WeatherIcon from '@/shared/ui/weather-icon'
 import { cva, type VariantProps } from 'class-variance-authority'
 
@@ -18,7 +19,7 @@ const styles = {
   item: cva('flex shrink-0 flex-col items-center rounded-xl', {
     variants: {
       variant: {
-        card: 'gap-2 border px-3 py-3 sm:px-4 min-w-[64px]',
+        card: 'gap-2 border px-4 py-3 min-w-[70px]',
         inline: 'gap-1.5 px-3 py-2 min-w-[60px]',
       },
       active: {
@@ -76,6 +77,30 @@ const styles = {
     ],
     defaultVariants: { variant: 'card', active: false },
   }),
+  skeleton: cva('flex shrink-0 flex-col items-center rounded-xl', {
+    variants: {
+      variant: {
+        card: 'gap-2 border px-4 py-3 min-w-[70px] min-h-[109px]',
+        inline: 'gap-1.5 px-3 py-2 min-w-[60px] min-h-[84px]',
+      },
+    },
+  }),
+}
+
+export const HourlyWeatherSkeleton = ({
+  variant = 'card',
+}: VariantProps<typeof styles.container>) => {
+  return (
+    <div className={styles.container({ variant })}>
+      {Array.from({ length: 24 }).map((_, index) => (
+        <Skeleton
+          key={index}
+          className={styles.skeleton({ variant })}
+          theme={variant === 'card' ? 'dark' : 'light'}
+        />
+      ))}
+    </div>
+  )
 }
 
 interface HourlyWeatherProps extends VariantProps<typeof styles.container> {
