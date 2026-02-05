@@ -1,7 +1,18 @@
 import DISTRICTS from '@/shared/data/korea_districts.json' with { type: 'json' }
 import { displayLocation } from '@/shared/lib/format'
-import { useId, useState, type ChangeEvent, type Ref } from 'react'
+import useDebounce from '@/shared/lib/use-debounce'
+import useIntersectionObserver from '@/shared/lib/use-intersection-observer'
+import {
+  useCallback,
+  useId,
+  useMemo,
+  useState,
+  type ChangeEvent,
+  type Ref,
+} from 'react'
 import { Link } from 'react-router-dom'
+
+const PAGE_SIZE = 50
 
 interface LocationSearchProps {
   ref?: Ref<HTMLInputElement>
@@ -33,14 +44,61 @@ const NoResultsMessage = ({ type }: NoResultsProps) => {
   )
 }
 
+interface SearchResultListProps {
+  allMatches: string[]
+}
+
+const SearchResultList = ({ allMatches }: SearchResultListProps) => {
+  const [visibleCount, setVisibleCount] = useState(PAGE_SIZE)
+  const filtered = allMatches.slice(0, visibleCount)
+  const hasMore = visibleCount < allMatches.length
+  const loadMore = useCallback(
+    () => setVisibleCount((prev) => prev + PAGE_SIZE),
+    []
+  )
+  const sentinelRef = useIntersectionObserver(loadMore, hasMore)
+
+  return (
+    <ul
+      role="listbox"
+      aria-label="검색 결과"
+      className="absolute left-0 right-0 top-full z-20 mt-2 max-h-80 overflow-y-auto rounded-xl border border-gray-700/50 bg-gray-800 shadow-xl"
+    >
+      {filtered.map((place) => (
+        <li key={`location-search-${place}`} role="option">
+          <Link
+            to={`/weather/${place}`}
+            className="flex w-full items-center gap-2 border-b border-gray-700/30 px-4 py-3 text-left text-sm text-gray-300 transition-colors last:border-0 hover:bg-gray-700/50 hover:text-white"
+          >
+            <span className="text-gray-600" aria-hidden="true">
+              📍
+            </span>
+            {displayLocation(place)}
+          </Link>
+        </li>
+      ))}
+      <li
+        ref={sentinelRef}
+        className="px-4 py-3 text-center text-xs text-gray-500"
+      >
+        {hasMore
+          ? '불러오는 중...'
+          : `검색 결과 ${allMatches.length.toLocaleString()}건`}
+      </li>
+    </ul>
+  )
+}
+
 const LocationSearch = ({ ref }: LocationSearchProps) => {
   const id = useId()
   const [value, setValue] = useState('')
   const [isFocused, setIsFocused] = useState(false)
+  const debouncedValue = useDebounce(value.trim(), 300)
 
-  const filtered = value
-    ? DISTRICTS.filter((s) => displayLocation(s).includes(value.trim()))
-    : []
+  const allMatches = useMemo(() => {
+    if (!debouncedValue) return []
+    return DISTRICTS.filter((s) => displayLocation(s).includes(debouncedValue))
+  }, [debouncedValue])
 
   const handleFocus = () => setIsFocused(true)
   const handleBlur = () => setIsFocused(false)
@@ -51,12 +109,19 @@ const LocationSearch = ({ ref }: LocationSearchProps) => {
   return (
     <div className="relative">
       <div className="flex items-center rounded-xl border border-gray-700/50 bg-gray-800 px-4 py-3 transition-colors focus-within:border-blue-500/50">
-        <span className="mr-3 text-lg text-gray-500">🔍</span>
+        <span className="mr-3 text-lg text-gray-500" aria-hidden="true">
+          🔍
+        </span>
         <input
           ref={ref}
           id={id}
           name="location-search"
           type="search"
+          role="combobox"
+          aria-expanded={isFocused && (!!debouncedValue || !value)}
+          aria-haspopup="listbox"
+          aria-autocomplete="list"
+          aria-label="장소 검색"
           placeholder="장소 검색 (시, 구, 동)"
           value={value}
           onFocus={handleFocus}
@@ -67,6 +132,7 @@ const LocationSearch = ({ ref }: LocationSearchProps) => {
         {value && (
           <button
             onClick={handleClear}
+            aria-label="검색어 지우기"
             className="ml-2 text-gray-500 hover:text-white"
           >
             ✕
@@ -74,23 +140,11 @@ const LocationSearch = ({ ref }: LocationSearchProps) => {
         )}
       </div>
       {isFocused && !value && <NoResultsMessage type="empty" />}
-      {value &&
-        (!filtered.length ? (
+      {debouncedValue &&
+        (!allMatches.length ? (
           <NoResultsMessage type="notFound" />
         ) : (
-          <ul className="absolute left-0 right-0 top-full z-20 mt-2 max-h-80 overflow-y-auto rounded-xl border border-gray-700/50 bg-gray-800 shadow-xl">
-            {filtered.map((place) => (
-              <li key={`location-search-${place}`}>
-                <Link
-                  to={`/weather/${place}`}
-                  className="flex w-full items-center gap-2 border-b border-gray-700/30 px-4 py-3 text-left text-sm text-gray-300 transition-colors last:border-0 hover:bg-gray-700/50 hover:text-white"
-                >
-                  <span className="text-gray-600">📍</span>
-                  {displayLocation(place)}
-                </Link>
-              </li>
-            ))}
-          </ul>
+          <SearchResultList key={debouncedValue} allMatches={allMatches} />
         ))}
     </div>
   )
