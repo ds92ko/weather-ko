@@ -125,6 +125,7 @@ const HourlyWeather = ({ data, variant = 'card' }: HourlyWeatherProps) => {
           <div
             key={`hourly-weather-${item.time}`}
             className={styles.item({ variant, active })}
+            role="listitem"
           >
             <span className={styles.time({ variant })}>{item.time}</span>
             <WeatherIcon
