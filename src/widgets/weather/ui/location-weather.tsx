@@ -42,9 +42,9 @@ const LocationWeather = ({
 }: LocationWeatherProps) => {
   return (
     <WeatherCard>
-      <h3 className="truncate text-center text-sm font-medium text-white/90">
+      <h2 className="truncate text-center text-sm font-medium text-white/90">
         {placeName}
-      </h3>
+      </h2>
       {isError ? (
         <WeatherError type="weather" size="sm" />
       ) : isLoading || !weather ? (

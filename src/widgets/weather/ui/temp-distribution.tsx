@@ -46,9 +46,9 @@ const TempDistribution = ({
 }: TempDistributionProps) => {
   return (
     <section>
-      <h3 className="mb-4 text-sm font-semibold uppercase tracking-wider text-gray-400">
+      <h2 className="mb-4 text-sm font-semibold uppercase tracking-wider text-gray-400">
         기온 분포
-      </h3>
+      </h2>
       <div className="rounded-xl border border-gray-700/30 bg-gray-800 p-5">
         {isError ? (
           <div className="flex min-h-[68px] items-center justify-center">

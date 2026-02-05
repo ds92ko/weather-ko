@@ -15,9 +15,9 @@ const HourlyOverview = ({
   isError,
 }: HourlyOverviewProps) => (
   <section>
-    <h3 className="mb-4 text-sm font-semibold uppercase tracking-wider text-gray-400">
+    <h2 className="mb-4 text-sm font-semibold uppercase tracking-wider text-gray-400">
       시간대별 기온
-    </h3>
+    </h2>
     {isError ? (
       <div className="flex min-h-[117px] items-center justify-center">
         <p className="text-sm text-gray-400">날씨 정보 없음</p>

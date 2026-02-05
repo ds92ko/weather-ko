@@ -74,9 +74,9 @@ const FavoriteCard = ({
                 onCancel={handleCancel}
               />
             ) : (
-              <p className="text-md truncate py-[1px] font-medium text-white">
+              <h3 className="text-md truncate py-[1px] font-medium text-white">
                 {favorite.alias || placeName}
-              </p>
+              </h3>
             )}
             {favorite.alias && (
               <p className="mt-1 truncate text-xs text-gray-400">{placeName}</p>
