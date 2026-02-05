@@ -38,8 +38,8 @@ const NoResultsMessage = ({ type }: NoResultsProps) => {
 
   return (
     <div className="absolute left-0 right-0 top-full z-20 mt-2 rounded-xl border border-gray-700/50 bg-gray-800 px-4 py-5 text-center shadow-xl">
-      <p className="text-xs text-gray-500">{title}</p>
-      <p className="mt-1 text-xs text-gray-600">{description}</p>
+      <p className="text-xs text-gray-400">{title}</p>
+      <p className="mt-1 text-xs text-gray-400">{description}</p>
     </div>
   )
 }
@@ -70,7 +70,7 @@ const SearchResultList = ({ allMatches }: SearchResultListProps) => {
             to={`/weather/${place}`}
             className="flex w-full items-center gap-2 border-b border-gray-700/30 px-4 py-3 text-left text-sm text-gray-300 transition-colors last:border-0 hover:bg-gray-700/50 hover:text-white"
           >
-            <span className="text-gray-600" aria-hidden="true">
+            <span className="text-gray-400" aria-hidden="true">
               📍
             </span>
             {displayLocation(place)}
@@ -79,7 +79,7 @@ const SearchResultList = ({ allMatches }: SearchResultListProps) => {
       ))}
       <li
         ref={sentinelRef}
-        className="px-4 py-3 text-center text-xs text-gray-500"
+        className="px-4 py-3 text-center text-xs text-gray-400"
       >
         {hasMore
           ? '불러오는 중...'
@@ -109,7 +109,7 @@ const LocationSearch = ({ ref }: LocationSearchProps) => {
   return (
     <div className="relative">
       <div className="flex items-center rounded-xl border border-gray-700/50 bg-gray-800 px-4 py-3 transition-colors focus-within:border-blue-500/50">
-        <span className="mr-3 text-lg text-gray-500" aria-hidden="true">
+        <span className="mr-3 text-lg text-gray-400" aria-hidden="true">
           🔍
         </span>
         <input
@@ -134,7 +134,7 @@ const LocationSearch = ({ ref }: LocationSearchProps) => {
           <button
             onClick={handleClear}
             aria-label="검색어 지우기"
-            className="ml-2 text-gray-500 hover:text-white"
+            className="ml-2 text-gray-400 hover:text-white"
           >
             ✕
           </button>

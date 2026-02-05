@@ -20,7 +20,7 @@ const HourlyOverview = ({
     </h3>
     {isError ? (
       <div className="flex min-h-[117px] items-center justify-center">
-        <p className="text-sm text-gray-500">날씨 정보 없음</p>
+        <p className="text-sm text-gray-400">날씨 정보 없음</p>
       </div>
     ) : isLoading || !hourly ? (
       <HourlyWeatherSkeleton variant="card" />

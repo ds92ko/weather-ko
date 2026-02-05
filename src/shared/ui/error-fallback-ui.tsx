@@ -53,7 +53,7 @@ const ErrorFallbackUI = ({
       <h2 id="fallback-title" className="mb-2 text-xl font-medium text-white">
         {resolvedTitle}
       </h2>
-      <p className="mb-6 text-sm text-gray-500">
+      <p className="mb-6 text-sm text-gray-400">
         {description ?? preset.description}
       </p>
       {isError && message && import.meta.env.DEV && (

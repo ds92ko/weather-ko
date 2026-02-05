@@ -10,7 +10,7 @@ const styles = cva('flex', {
   variants: {
     variant: {
       primary: 'text-blue-200 gap-3 text-sm',
-      secondary: 'text-gray-500 gap-2 text-xs',
+      secondary: 'text-gray-400 gap-2 text-xs',
     },
   },
   defaultVariants: {

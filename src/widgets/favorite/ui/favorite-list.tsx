@@ -15,7 +15,7 @@ const FavoriteList = ({ onSearchFocus }: FavoriteListProps) => {
           즐겨찾기
         </h2>
         <span
-          className="text-xs text-gray-600"
+          className="text-xs text-gray-400"
           aria-label={`즐겨찾기 ${favorites.length}개, 최대 6개`}
         >
           {favorites.length}/6
@@ -36,7 +36,7 @@ const FavoriteList = ({ onSearchFocus }: FavoriteListProps) => {
               type="button"
               onClick={onSearchFocus}
               aria-label="즐겨찾기 추가"
-              className="flex min-h-[170px] cursor-pointer items-center justify-center rounded-xl border-2 border-dashed border-gray-700/50 text-gray-600 transition-colors hover:border-gray-600 hover:text-gray-500"
+              className="flex min-h-[170px] cursor-pointer items-center justify-center rounded-xl border-2 border-dashed border-gray-700/50 text-gray-400 transition-colors hover:border-gray-500 hover:text-gray-300"
             >
               <span className="text-2xl" aria-hidden="true">
                 +
@@ -50,7 +50,7 @@ const FavoriteList = ({ onSearchFocus }: FavoriteListProps) => {
             ⭐
           </p>
           <p className="mb-1 text-sm text-gray-400">즐겨찾기가 없습니다</p>
-          <p className="mb-4 text-xs text-gray-600">
+          <p className="mb-4 text-xs text-gray-400">
             장소를 검색해서 즐겨찾기에 추가해보세요
           </p>
           <button

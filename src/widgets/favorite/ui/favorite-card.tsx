@@ -34,9 +34,9 @@ const styles = {
     {
       variants: {
         side: {
-          left: 'rounded-bl-xl text-gray-500 hover:bg-gray-700/50 hover:text-white',
+          left: 'rounded-bl-xl text-gray-400 hover:bg-gray-700/50 hover:text-white',
           right:
-            'rounded-br-xl text-gray-500 hover:bg-red-900/20 hover:text-red-400',
+            'rounded-br-xl text-gray-400 hover:bg-red-900/20 hover:text-red-400',
         },
       },
       defaultVariants: {
@@ -79,7 +79,7 @@ const FavoriteCard = ({
               </p>
             )}
             {favorite.alias && (
-              <p className="mt-1 truncate text-xs text-gray-500">{placeName}</p>
+              <p className="mt-1 truncate text-xs text-gray-400">{placeName}</p>
             )}
           </div>
           {isLoading ? (
@@ -107,7 +107,7 @@ const FavoriteCard = ({
               />
             </>
           ) : (
-            <p className="text-sm text-gray-500">날씨 정보 없음</p>
+            <p className="text-sm text-gray-400">날씨 정보 없음</p>
           )}
         </div>
       </Link>

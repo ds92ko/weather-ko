@@ -10,14 +10,14 @@ interface TempDistributionProps {
 const TempDistributionSkeleton = () => {
   return (
     <>
-      <div className="mb-2 flex justify-between text-xs text-gray-500">
+      <div className="mb-2 flex justify-between text-xs text-gray-400">
         <Skeleton className="h-4 w-10" theme="light" />
         <Skeleton className="h-4 w-10" theme="light" />
       </div>
       <div className="relative h-3 overflow-hidden rounded-full bg-gray-700">
         <div className="h-full w-full rounded-full bg-gradient-to-r from-blue-400 via-green-400 to-orange-400" />
       </div>
-      <div className="mt-3 flex items-center justify-center gap-2 text-sm text-gray-400">
+      <div className="mt-3 flex items-center justify-center gap-2 text-sm text-gray-300">
         현재
         <Skeleton className="h-[20px] w-10" theme="light" />
       </div>
@@ -52,13 +52,13 @@ const TempDistribution = ({
       <div className="rounded-xl border border-gray-700/30 bg-gray-800 p-5">
         {isError ? (
           <div className="flex min-h-[68px] items-center justify-center">
-            <p className="text-sm text-gray-500">날씨 정보 없음</p>
+            <p className="text-sm text-gray-300">날씨 정보 없음</p>
           </div>
         ) : isLoading || !weather ? (
           <TempDistributionSkeleton />
         ) : (
           <>
-            <div className="mb-2 flex justify-between text-xs text-gray-500">
+            <div className="mb-2 flex justify-between text-xs text-gray-400">
               <span>{weather.min}°</span>
               <span>{weather.max}°</span>
             </div>
@@ -77,7 +77,7 @@ const TempDistribution = ({
                 aria-hidden="true"
               />
             </div>
-            <div className="mt-3 flex items-center justify-center gap-2 text-sm text-gray-400">
+            <div className="mt-3 flex items-center justify-center gap-2 text-sm text-gray-300">
               현재
               <span className="font-medium text-white">{weather.temp}°</span>
             </div>
