@@ -1,73 +1,71 @@
-# React + TypeScript + Vite
+# 오늘의 날씨 — 대한민국 날씨
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+> 대한민국 날씨 정보 조회 및 즐겨찾기 관리 웹 애플리케이션
 
-Currently, two official plugins are available:
+## 🔗 배포 URL
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+[https://weather-ko.vercel.app](https://weather-ko.vercel.app)
 
-## React Compiler
+## 🚀 프로젝트 실행 방법
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+### 사전 요구사항
 
-## Expanding the ESLint configuration
+- Node.js 18+
+- pnpm(권장) 또는 npm, yarn
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+### API 키 발급
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+#### OpenWeatherMap
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+> 현재 날씨 및 시간대별 예보 조회
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+- [https://openweathermap.org](https://openweathermap.org)
+- One Call API 3.0 또는 2.5(무료) 사용 가능
+
+#### Kakao Developers
+
+> 주소 ↔ 위·경도 변환 (지오코딩 / 역지오코딩)
+
+- [https://developers.kakao.com](https://developers.kakao.com)
+- REST API 키 발급
+
+### 환경 변수 설정
+
+`.env.example`을 복사하여 `.env` 파일을 생성합니다.
+
+```bash
+cp .env.example .env
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+발급받은 API 키를 입력합니다.
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+```
+VITE_OWM_API_KEY=your_openweathermap_api_key
+VITE_KAKAO_API_KEY=your_kakao_rest_api_key
+```
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+### 설치 및 실행
+
+#### 의존성 설치
+
+```bash
+pnpm install
+```
+
+#### 개발 서버 실행 (http://localhost:5173)
+
+```bash
+pnpm dev
+```
+
+#### 프로덕션 빌드
+
+```bash
+pnpm build
+```
+
+#### 빌드 결과물 로컬 미리보기
+
+```bash
+pnpm preview
 ```
