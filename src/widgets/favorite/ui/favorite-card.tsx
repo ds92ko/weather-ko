@@ -1,5 +1,5 @@
 import useAliasEditor from '@/features/favorites/lib/use-alias-editor'
-import type { Favorite } from '@/features/favorites/lib/use-favorites'
+import type { Favorite } from '@/features/favorites/model/favorite'
 import AliasEditor from '@/features/favorites/ui/alias-editor'
 import useLocationWeather from '@/features/weather/lib/use-location-weather'
 import Skeleton from '@/shared/ui/skeleton'
