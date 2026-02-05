@@ -48,8 +48,8 @@ const CurrentWeather = () => {
 
   return (
     <WeatherCard>
-      <div className="mb-1 flex items-center gap-2 text-xs text-blue-200">
-        <span>📍</span>
+      <div className="mb-1 flex items-center gap-1 text-xs text-blue-200">
+        <span aria-hidden="true">📍</span>
         <span>현재 위치</span>
       </div>
       {geoError || isError ? (

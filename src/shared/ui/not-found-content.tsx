@@ -19,15 +19,24 @@ const NotFoundContent = ({ type = 'page' }: NotFoundContentProps) => {
   const { title, description } = ERROR_MESSAGES[type]
 
   return (
-    <section className="flex min-h-[400px] flex-col items-center justify-center text-center">
-      <p className="mb-4 text-6xl">🌧️</p>
-      <p className="mb-2 text-xl font-medium text-white">{title}</p>
+    <section
+      className="flex min-h-[400px] flex-col items-center justify-center text-center"
+      aria-labelledby="not-found-title"
+    >
+      <p className="mb-4 text-6xl" aria-hidden="true">
+        🌧️
+      </p>
+      <p id="not-found-title" className="mb-2 text-xl font-medium text-white">
+        {title}
+      </p>
       <p className="mb-6 text-sm text-gray-500">{description}</p>
       <Link
         to="/"
-        className="rounded-lg bg-blue-600 px-5 py-2.5 text-sm font-medium text-white transition-colors hover:bg-blue-500"
+        className="inline-flex items-center gap-2 rounded-lg bg-blue-600 px-5 py-2.5 text-sm font-medium text-white transition-colors hover:bg-blue-500"
+        aria-label="홈으로 돌아가기"
       >
-        🏠 홈으로 돌아가기
+        <span aria-hidden="true">🏠</span>
+        <span>홈으로 돌아가기</span>
       </Link>
     </section>
   )

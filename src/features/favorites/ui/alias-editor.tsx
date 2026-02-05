@@ -44,6 +44,7 @@ const AliasEditor = ({
       name="alias-editor"
       defaultValue={defaultValue}
       placeholder="별칭 입력 (선택사항)"
+      aria-label="별칭 입력 (선택사항)"
       className={styles({ size })}
       autoFocus
       onKeyDown={handleKeyDown}

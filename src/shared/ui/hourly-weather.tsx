@@ -114,6 +114,8 @@ const HourlyWeather = ({ data, variant = 'card' }: HourlyWeatherProps) => {
     <div
       ref={ref}
       className={styles.container({ variant })}
+      role="list"
+      aria-label="시간대별 날씨"
       {...dragScrollProps}
     >
       {data.map((item) => {

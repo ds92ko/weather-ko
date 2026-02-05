@@ -62,11 +62,16 @@ const TempDistribution = ({
               <span>{weather.min}°</span>
               <span>{weather.max}°</span>
             </div>
-            <div className="relative h-3 overflow-hidden rounded-full bg-gray-700">
-              <div className="h-full w-full rounded-full bg-gradient-to-r from-blue-400 via-green-400 to-orange-400" />
+            <div
+              className="relative h-3 overflow-hidden rounded-full bg-gray-700"
+              role="img"
+              aria-label={`현재 기온 ${weather.temp}도가 최소 ${weather.min}도와 최대 ${weather.max}도 사이에 표시됨`}
+            >
+              <div className="h-full w-full rounded-full bg-gradient-to-r from-blue-400 via-green-400 to-orange-400" aria-hidden="true" />
               <div
                 className="absolute top-1/2 h-3 w-3 -translate-x-1/2 -translate-y-1/2 rounded-full border-2 border-blue-500 bg-white shadow-lg"
                 style={getTempStyle(weather)}
+                aria-hidden="true"
               />
             </div>
             <div className="mt-3 flex items-center justify-center gap-2 text-sm text-gray-400">

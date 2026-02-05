@@ -6,7 +6,7 @@ import { BiArrowBack } from 'react-icons/bi'
 import { Link } from 'react-router-dom'
 
 const styles = cva(
-  'rounded-lg px-4 py-2 text-sm font-medium transition-all disabled:cursor-not-allowed disabled:opacity-50',
+  'inline-flex items-center gap-2 rounded-lg px-4 py-2 text-sm font-medium transition-all disabled:cursor-not-allowed disabled:opacity-50',
   {
     variants: {
       isFavorite: {
@@ -58,8 +58,9 @@ const FavoriteToolbar = ({ location }: FavoriteToolbarProps) => {
       <Link
         to="/"
         className="flex items-center gap-2 text-sm text-gray-400 transition-colors hover:text-white"
+        aria-label="홈으로 돌아가기"
       >
-        <BiArrowBack className="h-4 w-4" />
+        <BiArrowBack className="h-4 w-4" aria-hidden="true" />
         <span>뒤로</span>
       </Link>
       {isEditing ? (
@@ -74,35 +75,54 @@ const FavoriteToolbar = ({ location }: FavoriteToolbarProps) => {
         </div>
       ) : (
         favorite?.alias && (
-          <p className="text-md flex-grow truncate font-medium text-white/90">
-            📍 {favorite.alias}
+          <p className="text-md flex flex-grow items-center gap-1 truncate font-medium text-white/90">
+            <span aria-hidden="true">📍</span>
+            <span>{favorite.alias}</span>
           </p>
         )
       )}
       <div className="flex flex-wrap items-center gap-2">
         {favorite && (
           <button
+            type="button"
             onClick={() => {
               if (isEditing) handleSave()
               else startEditing()
             }}
-            className="rounded-lg border border-gray-700/50 bg-gray-800 px-3 py-2 text-sm text-gray-400 transition-colors hover:text-white"
+            aria-label={
+              isEditing
+                ? '별칭 저장'
+                : favorite?.alias
+                  ? '별칭 수정'
+                  : '별칭 추가'
+            }
+            className="inline-flex items-center gap-2 rounded-lg border border-gray-700/50 bg-gray-800 px-3 py-2 text-sm text-gray-400 transition-colors hover:text-white"
           >
-            {isEditing
-              ? '✅ 저장'
-              : `✏️ 별칭 ${favorite?.alias ? '수정' : '추가'}`}
+            <span aria-hidden="true">{isEditing ? '✅' : '✏️'}</span>
+            <span>
+              {isEditing ? '저장' : `별칭 ${favorite?.alias ? '수정' : '추가'}`}
+            </span>
           </button>
         )}
         <button
+          type="button"
           onClick={handleToggleFavorite}
           disabled={!favorite && isFull}
+          aria-label={
+            favorite ? (isEditing ? '취소' : '즐겨찾기 해제') : '즐겨찾기 추가'
+          }
           className={styles({ isFavorite: !!favorite, isEditing })}
         >
-          {favorite
-            ? isEditing
-              ? '❌ 취소'
-              : '⭐ 즐겨찾기 해제'
-            : '☆ 즐겨찾기 추가'}
+          <span aria-hidden="true">
+            {favorite ? (isEditing ? '❌' : '⭐') : '☆'}
+          </span>
+          <span>
+            {favorite
+              ? isEditing
+                ? '취소'
+                : '즐겨찾기 해제'
+              : '즐겨찾기 추가'}
+          </span>
         </button>
       </div>
     </section>

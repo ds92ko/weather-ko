@@ -10,8 +10,9 @@ const Footer = () => {
           target="_blank"
           rel="noopener noreferrer"
           className="flex items-center gap-1.5 transition-colors hover:text-gray-400"
+          aria-label="GitHub 저장소 열기"
         >
-          <BiLogoGithub className="h-5 w-5" />
+          <BiLogoGithub className="h-5 w-5" aria-hidden="true" />
           GitHub
         </a>
       </div>

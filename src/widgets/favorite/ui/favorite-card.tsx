@@ -6,7 +6,7 @@ import Skeleton from '@/shared/ui/skeleton'
 import TempRange from '@/shared/ui/temp-range'
 import WeatherIcon from '@/shared/ui/weather-icon'
 import { cva } from 'class-variance-authority'
-import { useNavigate } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 
 interface FavoriteCardProps {
   favorite: Favorite
@@ -30,7 +30,7 @@ const styles = {
     }
   ),
   button: cva(
-    'flex flex-1 items-center justify-center py-2 text-xs transition-colors',
+    'flex flex-1 items-center justify-center gap-1 py-2 text-xs transition-colors',
     {
       variants: {
         side: {
@@ -51,19 +51,19 @@ const FavoriteCard = ({
   onUpdateAlias,
   onRemove,
 }: FavoriteCardProps) => {
-  const navigate = useNavigate()
   const { placeName, weather, isLoading } = useLocationWeather(favorite.name)
   const { inputRef, isEditing, handleSave, handleCancel, startEditing } =
     useAliasEditor((alias) => onUpdateAlias(favorite.id, alias))
-  const handleGoWeather = () => {
-    if (isEditing) return
-    navigate(`/weather/${favorite.name}`)
-  }
   const handleRemove = () => onRemove(favorite.id)
 
   return (
     <div className={styles.card({ editing: isEditing })}>
-      <div onClick={handleGoWeather} className="flex flex-1 flex-col p-4">
+      <Link
+        to={`/weather/${favorite.name}`}
+        className={`flex flex-1 flex-col p-4 ${isEditing ? 'cursor-default' : ''}`}
+        onClick={(e) => isEditing && e.preventDefault()}
+        aria-label={`${favorite.alias || placeName} 날씨 보기`}
+      >
         <div className="flex items-start justify-between">
           <div className="min-w-0 grow pr-2">
             {isEditing ? (
@@ -110,26 +110,32 @@ const FavoriteCard = ({
             <p className="text-sm text-gray-500">날씨 정보 없음</p>
           )}
         </div>
-      </div>
+      </Link>
       <div className="flex border-t border-gray-700/30">
         <button
+          type="button"
           onClick={() => {
             if (isEditing) handleSave()
             else startEditing()
           }}
+          aria-label={isEditing ? '별칭 저장' : '별칭 수정'}
           className={styles.button({ side: 'left' })}
         >
-          {isEditing ? '✅ 저장' : '✏️ 수정'}
+          <span aria-hidden="true">{isEditing ? '✅' : '✏️'}</span>
+          <span>{isEditing ? '저장' : '수정'}</span>
         </button>
-        <div className="w-px bg-gray-700/30" />
+        <div className="w-px bg-gray-700/30" aria-hidden="true" />
         <button
+          type="button"
           onClick={() => {
             if (isEditing) handleCancel()
             else handleRemove()
           }}
+          aria-label={isEditing ? '수정 취소' : '즐겨찾기 삭제'}
           className={styles.button({ side: 'right' })}
         >
-          {isEditing ? '❌ 취소' : '🗑 삭제'}
+          <span aria-hidden="true">{isEditing ? '❌' : '🗑'}</span>
+          <span>{isEditing ? '취소' : '삭제'}</span>
         </button>
       </div>
     </div>
