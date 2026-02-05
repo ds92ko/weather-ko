@@ -1,10 +1,7 @@
-import useTitle from '@/shared/lib/use-title'
-import NotFoundContent from '@/shared/ui/not-found-content'
+import { FallbackError } from '@/shared/lib/fallback-error'
 
 const NotFound = () => {
-  useTitle('페이지를 찾을 수 없습니다')
-
-  return <NotFoundContent />
+  throw new FallbackError('page')
 }
 
 export default NotFound

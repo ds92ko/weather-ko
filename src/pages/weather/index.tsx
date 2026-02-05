@@ -1,7 +1,7 @@
 import useLocationWeather from '@/features/weather/lib/use-location-weather'
 import DISTRICTS from '@/shared/data/korea_districts.json' with { type: 'json' }
+import { FallbackError } from '@/shared/lib/fallback-error'
 import useTitle from '@/shared/lib/use-title'
-import NotFoundContent from '@/shared/ui/not-found-content'
 import FavoriteToolbar from '@/widgets/favorite/ui/favorite-toolbar'
 import HourlyOverview from '@/widgets/weather/ui/hourly-overview'
 import LocationWeather from '@/widgets/weather/ui/location-weather'
@@ -10,13 +10,13 @@ import { useParams } from 'react-router-dom'
 
 const Weather = () => {
   const { location } = useParams<{ location: string }>()
-  const isNotFound = !location || !DISTRICTS.includes(location)
-  const { placeName, weather, isLoading, isError } = useLocationWeather(
-    location || ''
-  )
 
-  useTitle(isNotFound ? '해당 장소의 정보가 제공되지 않습니다' : placeName)
-  if (isNotFound) return <NotFoundContent type="location" />
+  const isNotFound = !location || !DISTRICTS.includes(location)
+  if (isNotFound) throw new FallbackError('location')
+
+  const { placeName, weather, isLoading, isError } =
+    useLocationWeather(location)
+  useTitle(placeName)
 
   return (
     <>
