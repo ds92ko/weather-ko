@@ -1,5 +1,8 @@
 import { MAX_FAVORITES, STORAGE_KEY } from '@/features/favorites/config'
-import { isFavoriteShape, type Favorite } from '@/features/favorites/model/favorite'
+import {
+  isFavoriteShape,
+  type Favorite,
+} from '@/features/favorites/model/favorite'
 import createLocalStore from '@/shared/lib/create-local-store'
 import { useCallback, useSyncExternalStore } from 'react'
 
