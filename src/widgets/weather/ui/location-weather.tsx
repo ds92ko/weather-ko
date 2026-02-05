@@ -42,7 +42,7 @@ const LocationWeather = ({
 }: LocationWeatherProps) => {
   return (
     <WeatherCard>
-      <h3 className="truncate text-sm font-medium text-white/90">
+      <h3 className="truncate text-center text-sm font-medium text-white/90">
         {placeName}
       </h3>
       {isError ? (
@@ -60,7 +60,9 @@ const LocationWeather = ({
               {weather.temp}°
             </p>
           </div>
-          <p className="mt-6 text-sm text-white/90">{weather.description}</p>
+          <p className="mt-6 text-center text-sm text-white/90">
+            {weather.description}
+          </p>
           <div className="mt-3 flex flex-wrap items-center justify-center gap-2">
             <span className="rounded-full bg-white/10 px-3 py-1 text-xs font-medium text-blue-100 ring-1 ring-white/20">
               최저 {weather.min}°
