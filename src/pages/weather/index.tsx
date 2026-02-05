@@ -15,8 +15,8 @@ const Weather = () => {
     location || ''
   )
 
-  useTitle(isNotFound ? '페이지를 찾을 수 없습니다' : placeName)
-  if (isNotFound) return <NotFoundContent />
+  useTitle(isNotFound ? '해당 장소의 정보가 제공되지 않습니다' : placeName)
+  if (isNotFound) return <NotFoundContent type="location" />
 
   return (
     <>
