@@ -117,6 +117,7 @@ const LocationSearch = ({ ref }: LocationSearchProps) => {
           id={id}
           name="location-search"
           type="search"
+          autoComplete="off"
           role="combobox"
           aria-expanded={isFocused && (!!debouncedValue || !value)}
           aria-haspopup="listbox"
