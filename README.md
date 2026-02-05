@@ -6,7 +6,7 @@
 
 ![CI](https://github.com/ds92ko/weather-ko/actions/workflows/ci.yml/badge.svg)
 
-## 목차
+## 📑 목차
 
 - [🚀 프로젝트 실행 방법](#-프로젝트-실행-방법)
   - [사전 요구사항](#사전-요구사항)
